@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">📚</div>
+      <div><strong>LibraryPro</strong><small>Management System</small></div>
+    </div>
+    <nav>
+      <button data-tab="dashboard" class="active">📊 Dashboard</button>
+      <button data-tab="books">📖 Books</button>
+      <button data-tab="members">👥 Members</button>
+      <button data-tab="circulation">🔄 Issue / Return</button>
+      <button data-tab="overdue">⏰ Overdue &amp; Fines</button>
+    </nav>
+    <div class="side-foot">Automated stock, fines<br>and reminders</div>
+  </aside>
+
+  <div class="content">
+    <div class="topbar">
+      <h1 id="page-title">Dashboard</h1>
+      <div class="user"><span class="avatar">L</span> Librarian</div>
+    </div>
+
+    <p id="message"></p>
+
+    <main>
+      <section id="dashboard" class="tab active">
+        <div class="cards">
+          <div class="card"><span id="c-titles">0</span><p>Book Titles</p></div>
+          <div class="card"><span id="c-members">0</span><p>Members</p></div>
+          <div class="card"><span id="c-issued">0</span><p>Currently Issued</p></div>
+          <div class="card warn"><span id="c-overdue">0</span><p>Overdue</p></div>
+        </div>
+        <h2>Most borrowed books</h2>
+        <div class="panel">
+          <table id="popular-table">
+            <thead><tr><th>Book</th><th>Author</th><th>Times Issued</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="books" class="tab">
+        <input id="search" type="text" placeholder="Search by title or author...">
+        <div class="panel">
+          <table id="books-table">
+            <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>Availability</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="members" class="tab">
+        <h2>Add a new member</h2>
+        <form id="member-form">
+          <input id="m-name" placeholder="Full name" required>
+          <input id="m-email" type="email" placeholder="Email">
+          <input id="m-phone" placeholder="Phone">
+          <button type="submit">Add Member</button>
+        </form>
+        <h2>All members</h2>
+        <div class="panel">
+          <table id="members-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="circulation" class="tab">
+        <h2>Issue a book</h2>
+        <form id="issue-form">
+          <select id="issue-book" required></select>
+          <select id="issue-member" required></select>
+          <button type="submit">Issue Book</button>
+        </form>
+        <h2>Currently issued</h2>
+        <div class="panel">
+          <table id="issued-table">
+            <thead><tr><th>Issue ID</th><th>Book</th><th>Member</th><th>Issued</th><th>Due</th><th>Action</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="overdue" class="tab">
+        <h2>Due in the next 3 days</h2>
+        <div class="panel">
+          <table id="duesoon-table">
+            <thead><tr><th>Member</th><th>Book</th><th>Due Date</th><th>Days Left</th><th>Reminder</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <h2>Overdue books</h2>
+        <div class="panel">
+          <table id="overdue-table">
+            <thead><tr><th>Member</th><th>Book</th><th>Due Date</th><th>Days Overdue</th><th>Fine So Far (₹)</th><th>Reminder</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <h2>Fines recorded</h2>
+        <div class="panel">
+          <table id="fines-table">
+            <thead><tr><th>Member</th><th>Book</th><th>Amount (₹)</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="/static/script.js"></script>
+<script>
+  // Show the active tab name in the top bar
+  document.querySelectorAll("nav button").forEach(b =>
+    b.addEventListener("click", () =>
+      document.getElementById("page-title").textContent = b.textContent.replace(/^\S+\s/, "")));
+</script>
+</body>
+</html>
