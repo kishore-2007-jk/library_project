@@ -17,7 +17,14 @@ DB_CONFIG = {
 }
 
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+
 def get_conn():
+    # On Render: one DATABASE_URL (Supabase connection string).
+    # Locally: fall back to the PG_* variables above.
+    if DATABASE_URL:
+        return psycopg2.connect(DATABASE_URL, sslmode="require")
     return psycopg2.connect(**DB_CONFIG)
 
 
