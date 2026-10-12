@@ -31,6 +31,15 @@ def home():
     return send_from_directory("static", "index.html")
 
 
+@app.route("/health")
+def health():
+    try:
+        run_query("SELECT 1")
+        return jsonify({"status": "ok", "database": "connected"})
+    except Exception as e:
+        return jsonify({"status": "error", "database": str(e)}), 500
+
+
 # ── READ routes ───────────────────────────────────────────────────────────────
 
 @app.route("/api/dashboard")
